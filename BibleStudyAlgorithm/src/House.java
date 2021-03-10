@@ -19,4 +19,11 @@ public class House {
     public int getCurrentCapacity() {
         return 1 + visitors.size();
     }
+
+    @Override
+    public String toString() {
+        String retval = "";
+        retval += host.name + "(host) | " + visitors.toString();
+        return retval;
+    }
 }

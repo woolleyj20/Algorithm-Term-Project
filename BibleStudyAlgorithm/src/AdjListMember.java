@@ -19,4 +19,9 @@ public class AdjListMember {
     public boolean getHostStatus() {
         return !(hostHouse == null);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

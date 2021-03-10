@@ -9,13 +9,13 @@ public class Algorithm {
 
     public static void main(String[] args) {
         //Temporary hard coded inputs
-        String[] namesArray = {"A", "B", "C", "D", "E", "F", "G", "H"};
+        String[] namesArray = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V"};
         ArrayList<AdjListMember> adjList = new ArrayList<AdjListMember>();
         for (int i = 0; i < namesArray.length; i++) {
             adjList.add(new AdjListMember(namesArray[i]));
         }
 
-        int groupSize = 3;
+        int groupSize = 5;
 
         //Graph constructed from default
         Graph<AdjListMember, DefaultWeightedEdge> graph = new SimpleDirectedWeightedGraph<AdjListMember, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -44,6 +44,7 @@ public class Algorithm {
 
         //Graph is complete!  YAY!  Now the hard part
 
+        int weekCounter = 1;
         //Our goal is to deconstruct from a clique, so the goal is to remove all edges.  As such, we only stop if the edgeSet is empty
         while(!graph.edgeSet().isEmpty()) {
             ArrayList<House> weeklyHouses = new ArrayList<House>();
@@ -82,8 +83,29 @@ public class Algorithm {
                     }
                 }
             }
+
+            //In here somewhere will have to be adding the people we skip each first run of the week
+
+            //Resetting all of the host and visitor variables
+            for (AdjListMember member : adjList) {
+                member.hostHouse = null;
+                member.isVisitor = false;
+            }
+            System.out.println(printWeeklyHouses(weeklyHouses, weekCounter));
+            weekCounter++;
         }
 
+
+
+    }
+
+    public static String printWeeklyHouses(ArrayList<House> houseList, int weekNumber) {
+        String retval = "";
+        retval += "Week " + String.valueOf(weekNumber) + ":\n";
+        for (int i = 0; i < houseList.size(); i++) {
+            retval += "House " + String.valueOf(i) + ": " + houseList.get(i).toString() + "\n";
+        }
+        return retval;
     }
 
 }
