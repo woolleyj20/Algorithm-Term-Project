@@ -10,27 +10,27 @@ public class Algorithm {
     public static void main(String[] args) {
         //Temporary hard coded inputs
         int totalPeople = 0;
-        String[] namesArray = {"A", "B", "C+D", "E", "F", "G", "H+I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U"};
-        ArrayList<AdjListMember> adjList = new ArrayList<AdjListMember>();
-        for (int i = 0; i < namesArray.length; i++) {
-            if (namesArray[i].contains("+")) {
-                adjList.add(new AdjListMember(namesArray[i], 2));
+        String[] namesArray = {"Claude", "Lorenz", "Raphael", "Ignatz", "Lysithea", "Marianne", "Hilda", "Leonie", "Dimitri", "Dedue", "Felix", "Ashe", "Sylvain", "Mercedes", "Annette", "Ingrid", "Edelgard", "Hubert", "Ferdinand", "Linhardt", "Caspar", "Bernadetta", "Dorothea", "Petra"};
+
+        ArrayList<AdjListMember> adjList = new ArrayList<>();
+        for (String s : namesArray) {
+            if (s.contains("+")) {
+                adjList.add(new AdjListMember(s, 2));
                 totalPeople += 2;
-            }
-            else {
-                adjList.add(new AdjListMember(namesArray[i], 1));
+            } else {
+                adjList.add(new AdjListMember(s, 1));
                 totalPeople += 1;
             }
         }
 
-        int groupSize = 6;
+        int groupSize = 12;
 
         //Graph constructed from default
-        Graph<AdjListMember, DefaultWeightedEdge> graph = new SimpleDirectedWeightedGraph<AdjListMember, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+        Graph<AdjListMember, DefaultWeightedEdge> graph = new SimpleDirectedWeightedGraph<>(DefaultWeightedEdge.class);
 
         //Loop through the AdjListMembers and make them verticies
-        for (int i = 0; i < adjList.size(); i++) {
-            graph.addVertex(adjList.get(i));
+        for (AdjListMember adjListMember : adjList) {
+            graph.addVertex(adjListMember);
         }
 
         //Loop through all combinations of verticies and make an edge for it
@@ -52,8 +52,8 @@ public class Algorithm {
         }
 
         //Add all outgoing edges into the list of edges for each AdjListMember
-        for (int i = 0; i < adjList.size(); i++) {
-            adjList.get(i).edges.addAll(graph.outgoingEdgesOf(adjList.get(i)));
+        for (AdjListMember adjListMember : adjList) {
+            adjListMember.edges.addAll(graph.outgoingEdgesOf(adjListMember));
         }
 
         //Graph is complete!  YAY!  Now the hard part
@@ -68,12 +68,11 @@ public class Algorithm {
             if (extrasCount > 0 && maxExtraCapacity == 0) {
                 maxExtraCapacity = 1;
             }
-            ArrayList<House> weeklyHouses = new ArrayList<House>();
+            ArrayList<House> weeklyHouses = new ArrayList<>();
             for (AdjListMember member : adjList) {
                 if (!member.isVisitor && !member.getHostStatus()) {
                     if (!assign(member, graph, weeklyHouses, groupSize, maxHouses)) {
-                        if (assignForExtras(member, graph, weeklyHouses, groupSize + maxExtraCapacity, maxHouses, extrasCount)) {
-                        }
+                        assignForExtras(member, graph, weeklyHouses, groupSize + maxExtraCapacity, maxHouses, extrasCount);
                     }
                 }
             }
@@ -159,7 +158,7 @@ public class Algorithm {
         return false;
     }
 
-    public static boolean assignForExtras(AdjListMember member, Graph<AdjListMember, DefaultWeightedEdge> graph, ArrayList<House> weeklyHouses, int groupSizeCheck, int maxHouses, int extrasCount) {
+    public static void assignForExtras(AdjListMember member, Graph<AdjListMember, DefaultWeightedEdge> graph, ArrayList<House> weeklyHouses, int groupSizeCheck, int maxHouses, int extrasCount) {
         ArrayList<DefaultWeightedEdge> edges = member.edges;
         for (int i = 0, edgesSize = edges.size(); i < edgesSize; i++) {
             DefaultWeightedEdge edge = edges.get(i);
@@ -172,7 +171,7 @@ public class Algorithm {
                     member.edges.remove(i);
                     graph.removeEdge(edge);
 
-                    return true;
+                    return;
                 }
                 else if (target.getHostStatus()) {
                     addToHouse(member, target);
@@ -180,7 +179,7 @@ public class Algorithm {
                     member.edges.remove(i);
                     graph.removeEdge(edge);
 
-                    return true;
+                    return;
                 }
             }
             else if (!target.getHostStatus() && !target.isVisitor) {
@@ -192,7 +191,7 @@ public class Algorithm {
                     graph.removeEdge(edge);
 
                     extrasCount--;
-                    return true;
+                    return;
                 }
             }
             else if (target.getHostStatus()) {
@@ -204,11 +203,10 @@ public class Algorithm {
                     graph.removeEdge(edge);
 
                     extrasCount--;
-                    return true;
+                    return;
                 }
             }
         }
-        return false;
     }
 
     public static void createNewHouse(AdjListMember member, AdjListMember target, ArrayList<House> weeklyHouses) {
@@ -243,12 +241,12 @@ public class Algorithm {
     }
 
     public static String printWeeklyHouses(ArrayList<House> houseList, int weekNumber) {
-        String retval = "";
-        retval += "Week " + String.valueOf(weekNumber) + ":\n";
+        StringBuilder retval = new StringBuilder();
+        retval.append("Week ").append(weekNumber).append(":\n");
         for (int i = 0; i < houseList.size(); i++) {
-            retval += "House " + String.valueOf(i) + ": " + houseList.get(i).toString() + "\n";
+            retval.append("House ").append(i).append(": ").append(houseList.get(i).toString()).append("\n");
         }
-        return retval;
+        return retval.toString();
     }
 
 }
