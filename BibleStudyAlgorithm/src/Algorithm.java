@@ -9,13 +9,21 @@ public class Algorithm {
 
     public static void main(String[] args) {
         //Temporary hard coded inputs
-        String[] namesArray = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V"};
+        int totalPeople = 0;
+        String[] namesArray = {"A", "B", "C+D", "E", "F", "G", "H+I", "J", "K", "L", "M", "N", "O", "P", "Q"};
         ArrayList<AdjListMember> adjList = new ArrayList<AdjListMember>();
         for (int i = 0; i < namesArray.length; i++) {
-            adjList.add(new AdjListMember(namesArray[i]));
+            if (namesArray[i].contains("+")) {
+                adjList.add(new AdjListMember(namesArray[i], 2));
+                totalPeople += 2;
+            }
+            else {
+                adjList.add(new AdjListMember(namesArray[i], 1));
+                totalPeople += 1;
+            }
         }
 
-        int groupSize = 5;
+        int groupSize = 3;
 
         //Graph constructed from default
         Graph<AdjListMember, DefaultWeightedEdge> graph = new SimpleDirectedWeightedGraph<AdjListMember, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -32,7 +40,13 @@ public class Algorithm {
                     //Construct the edge and set the weight
                     //NOTE: Later this will have to take into account married couples
                     DefaultWeightedEdge edge = graph.addEdge(adjList.get(i), adjList.get(j));
-                    graph.setEdgeWeight(edge, 1);
+                    if (adjList.get(i).name.contains("+")) {
+                        graph.setEdgeWeight(edge, 2);
+                    }
+                    else {
+                        graph.setEdgeWeight(edge, 1);
+                    }
+
                 }
             }
         }
@@ -45,46 +59,33 @@ public class Algorithm {
         //Graph is complete!  YAY!  Now the hard part
 
         int weekCounter = 1;
+        int maxHouses = totalPeople / groupSize;
+
         //Our goal is to deconstruct from a clique, so the goal is to remove all edges.  As such, we only stop if the edgeSet is empty
         while(!graph.edgeSet().isEmpty()) {
+            int extrasCount = totalPeople % groupSize;
             ArrayList<House> weeklyHouses = new ArrayList<House>();
             int assignmentTrack = adjList.size();
             for (AdjListMember member : adjList) {
                 if (!member.isVisitor && !member.getHostStatus()) {
-                    ArrayList<DefaultWeightedEdge> edges = member.edges;
-                    for (int i = 0, edgesSize = edges.size(); i < edgesSize; i++) {
-                        DefaultWeightedEdge edge = edges.get(i);
-                        //This variable stores the edge target so we don't have to repeatedly call getEdgeTarget (which I did at first... it was a bad idea...)
-                        AdjListMember target = graph.getEdgeTarget(edge);
-                        if (!target.getHostStatus() && !target.isVisitor) {
-                            House house = new House();
-                            weeklyHouses.add(house);
-                            house.assignHost(target);
-                            target.hostHouse = house;
-                            house.addVisitor(member);
-                            member.isVisitor = true;
-
-                            member.edges.remove(i);
-                            graph.removeEdge(edge);
-
-                            assignmentTrack -= 2;
-                            break;
-                        } else if (target.getHostStatus()) {
-                            //This will need to change slightly when we account for married couples
-                            if (target.hostHouse.getCurrentCapacity() < groupSize) {
-                                target.hostHouse.addVisitor(member);
-                                member.isVisitor = true;
-                                member.edges.remove(i);
-                                graph.removeEdge(edge);
-                                assignmentTrack--;
-                                break;
-                            }
+                    if (!assign(member, graph, weeklyHouses, assignmentTrack, groupSize, maxHouses) && extrasCount > 0) {
+                        if (assign(member, graph, weeklyHouses, assignmentTrack, groupSize + 1, maxHouses)) {
+                            extrasCount--;
                         }
                     }
                 }
             }
 
             //In here somewhere will have to be adding the people we skip each first run of the week
+
+            //Go back through for the ones that were skipped for one reason or another
+//            for (AdjListMember member : adjList) {
+//                if (!member.isVisitor && !member.getHostStatus()) {
+//                    if (!member.edges.isEmpty()) {
+//
+//                    }
+//                }
+//            }
 
             //Resetting all of the host and visitor variables
             for (AdjListMember member : adjList) {
@@ -97,6 +98,58 @@ public class Algorithm {
 
 
 
+    }
+
+    public static boolean assign(AdjListMember member, Graph<AdjListMember, DefaultWeightedEdge> graph, ArrayList<House> weeklyHouses, int assignmentTrack, int groupSizeCheck, int maxHouses) {
+        ArrayList<DefaultWeightedEdge> edges = member.edges;
+        for (int i = 0, edgesSize = edges.size(); i < edgesSize; i++) {
+            DefaultWeightedEdge edge = edges.get(i);
+            //This variable stores the edge target so we don't have to repeatedly call getEdgeTarget (which I did at first... it was a bad idea...)
+            AdjListMember target = graph.getEdgeTarget(edge);
+            if (!target.getHostStatus() && !target.isVisitor) {
+                if (weeklyHouses.size() < maxHouses && (member.peopleCount + target.peopleCount) <= groupSizeCheck) {
+
+                    createNewHouse(member, target, weeklyHouses);
+
+                    member.edges.remove(i);
+                    graph.removeEdge(edge);
+
+                    assignmentTrack -= 2;
+
+                    return true;
+                }
+            } else if (target.getHostStatus()) {
+                //This will need to change slightly when we account for married couples
+                if ((target.hostHouse.getCurrentCapacity() + member.peopleCount) <= groupSizeCheck) {
+
+                    addToHouse(member, target);
+
+                    member.edges.remove(i);
+                    graph.removeEdge(edge);
+
+                    assignmentTrack--;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void createNewHouse(AdjListMember member, AdjListMember target, ArrayList<House> weeklyHouses) {
+        House house = new House();
+        weeklyHouses.add(house);
+        house.assignHost(target);
+        house.currentCapacity += target.peopleCount;
+        target.hostHouse = house;
+        house.addVisitor(member);
+        house.currentCapacity += member.peopleCount;
+        member.isVisitor = true;
+    }
+
+    public static void addToHouse(AdjListMember member, AdjListMember target) {
+        target.hostHouse.addVisitor(member);
+        target.hostHouse.currentCapacity += member.peopleCount;
+        member.isVisitor = true;
     }
 
     public static String printWeeklyHouses(ArrayList<House> houseList, int weekNumber) {

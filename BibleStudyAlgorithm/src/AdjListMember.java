@@ -5,15 +5,18 @@ import java.util.ArrayList;
 
 public class AdjListMember {
     public String name;
+    public int peopleCount;
     public ArrayList<DefaultWeightedEdge> edges;
     public House hostHouse;
     public boolean isVisitor;
 
-    public AdjListMember(String name) {
+    public AdjListMember(String name, int peopleCount) {
         this.name = name;
+        this.peopleCount = peopleCount;
         edges = new ArrayList<DefaultWeightedEdge>();
         hostHouse = null;
         isVisitor = false;
+
     }
 
     public boolean getHostStatus() {

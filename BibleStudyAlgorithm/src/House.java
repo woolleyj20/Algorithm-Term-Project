@@ -1,8 +1,12 @@
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultWeightedEdge;
+
 import java.util.ArrayList;
 
 public class House {
     public AdjListMember host;
     public ArrayList<AdjListMember> visitors;
+    public int currentCapacity = 0;
 
     public House() {
         visitors = new ArrayList<AdjListMember>();
@@ -17,7 +21,7 @@ public class House {
     }
 
     public int getCurrentCapacity() {
-        return 1 + visitors.size();
+        return currentCapacity;
     }
 
     @Override
