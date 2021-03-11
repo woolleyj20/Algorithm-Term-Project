@@ -1,5 +1,7 @@
 import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import java.util.ArrayList;
@@ -12,42 +14,34 @@ public class Algorithm {
         int totalPeople = 0;
         String[] namesArray = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
-        //Set up the list of verticies as AdjListMembers
+        //Temporary hard coded group size
+        int groupSize = 13;
+
+        //Graph constructed from default
+        Graph<AdjListMember, DefaultEdge> graph = new SimpleDirectedGraph<>(DefaultEdge.class);
+
+        //Set up the list of verticies as AdjListMembers and add them to graph
         ArrayList<AdjListMember> adjList = new ArrayList<>();
         for (String s : namesArray) {
             if (s.contains("+")) {
-                adjList.add(new AdjListMember(s, 2));
+                AdjListMember member = new AdjListMember(s, 2);
+                adjList.add(member);
+                graph.addVertex(member);
                 totalPeople += 2;
             } else {
-                adjList.add(new AdjListMember(s, 1));
+                AdjListMember member = new AdjListMember(s, 1);
+                adjList.add(member);
+                graph.addVertex(member);
                 totalPeople += 1;
             }
-        }
-
-        //Temporary hard coded group size
-        int groupSize = 3;
-
-        //Graph constructed from default
-        Graph<AdjListMember, DefaultWeightedEdge> graph = new SimpleDirectedWeightedGraph<>(DefaultWeightedEdge.class);
-
-        //Loop through the AdjListMembers and make them verticies
-        for (AdjListMember adjListMember : adjList) {
-            graph.addVertex(adjListMember);
         }
 
         //Loop through all combinations of verticies and make an edge for it
         for (int i = 0; i < adjList.size(); i++) {
             for (int j = 0; j < adjList.size(); j++) {
                 if (i != j) {
-                    //Construct the edge and set the weight
-                    DefaultWeightedEdge edge = graph.addEdge(adjList.get(i), adjList.get(j));
-                    if (adjList.get(i).name.contains("+")) {
-                        graph.setEdgeWeight(edge, 2);
-                    }
-                    else {
-                        graph.setEdgeWeight(edge, 1);
-                    }
-
+                    //Construct the edge
+                    DefaultEdge edge = graph.addEdge(adjList.get(i), adjList.get(j));
                 }
             }
         }
@@ -95,7 +89,6 @@ public class Algorithm {
             //Arbitrary assignment of remaining repeat visits
 
             for (AdjListMember member : adjList) {
-                int distributeHouseIndex = 0;
                 if (!member.isVisitor && !member.getHostStatus()) {
                     for (House house : weeklyHouses) {
                         if (extrasCount > 0 && (house.currentCapacity + member.peopleCount) <= groupSize + maxExtraCapacity) {
@@ -113,17 +106,6 @@ public class Algorithm {
                     if (!member.isVisitor && !member.getHostStatus() && weeklyHouses.size() < maxHouses) {
                         createNewHouseAsHost(member, weeklyHouses);
                     }
-                    else if (!member.isVisitor && !member.getHostStatus()){
-                        if (distributeHouseIndex < maxHouses) {
-                            addToHouse(member, weeklyHouses.get(distributeHouseIndex));
-                            distributeHouseIndex++;
-                        }
-                        else {
-                            distributeHouseIndex = 0;
-                            addToHouse(member, weeklyHouses.get(distributeHouseIndex));
-                            distributeHouseIndex++;
-                        }
-                    }
                 }
             }
 
@@ -135,16 +117,13 @@ public class Algorithm {
             System.out.println(printWeeklyHouses(weeklyHouses, weekCounter));
             weekCounter++;
         }
-
-
-
     }
 
-    public static boolean assign(AdjListMember member, Graph<AdjListMember, DefaultWeightedEdge> graph, ArrayList<House> weeklyHouses, int groupSizeCheck, int maxHouses) {
-        ArrayList<DefaultWeightedEdge> edges = member.edges;
+    public static boolean assign(AdjListMember member, Graph<AdjListMember, DefaultEdge> graph, ArrayList<House> weeklyHouses, int groupSizeCheck, int maxHouses) {
+        ArrayList<DefaultEdge> edges = member.edges;
         //Initializing a variable to track the edges left for a member
         for (int i = 0, edgesSize = edges.size(); i < edgesSize; i++) {
-            DefaultWeightedEdge edge = edges.get(i);
+            DefaultEdge edge = edges.get(i);
             //This variable stores the edge target so we don't have to repeatedly call getEdgeTarget (which I did at first... it was a bad idea...)
             AdjListMember target = graph.getEdgeTarget(edge);
             //First, it checks if the current target is completely free (not a host and not a visitor)
@@ -178,19 +157,20 @@ public class Algorithm {
         return false;
     }
 
-    public static boolean assignForExtras(AdjListMember member, Graph<AdjListMember, DefaultWeightedEdge> graph, ArrayList<House> weeklyHouses, int groupSizeCheck, int maxHouses, int extrasCount) {
+    public static boolean assignForExtras(AdjListMember member, Graph<AdjListMember, DefaultEdge> graph, ArrayList<House> weeklyHouses, int groupSizeCheck, int maxHouses, int extrasCount) {
         //This function is only entered if a member wasn't able to be assigned to any new houses or current houses at capacity.  The reason why this is necessary is because of a specific check for a rare case later on.  It also has to compare the new groupSizeCheck
         //against the extrasCount to make sure too many extras aren't assigned
 
-        ArrayList<DefaultWeightedEdge> edges = member.edges;
+        ArrayList<DefaultEdge> edges = member.edges;
         //Loop through the edges again
         for (int i = 0, edgesSize = edges.size(); i < edgesSize; i++) {
-            DefaultWeightedEdge edge = edges.get(i);
+            DefaultEdge edge = edges.get(i);
             //This variable stores the edge target so we don't have to repeatedly call getEdgeTarget (which I did at first... it was a bad idea...)
             AdjListMember target = graph.getEdgeTarget(edge);
             //A very specific case where the groupSizeCheck is less than 4 but two couples need to be assigned to each other.  Under the structure they would never be able to be assigned, so this case takes care of that.
             if (member.peopleCount == 2 && target.peopleCount == 2 && !target.getHostStatus() && extrasCount == 0 && groupSizeCheck < 4) {
                 if (!target.getHostStatus() && !target.isVisitor) {
+
                     createNewHouse(member, target, weeklyHouses);
 
                     member.edges.remove(i);
@@ -273,7 +253,6 @@ public class Algorithm {
         }
         return retval.toString();
     }
-
 }
 
 

@@ -6,14 +6,14 @@ import java.util.ArrayList;
 public class AdjListMember {
     public String name;
     public int peopleCount;
-    public ArrayList<DefaultWeightedEdge> edges;
+    public ArrayList<DefaultEdge> edges;
     public House hostHouse;
     public boolean isVisitor;
 
     public AdjListMember(String name, int peopleCount) {
         this.name = name;
         this.peopleCount = peopleCount;
-        edges = new ArrayList<DefaultWeightedEdge>();
+        edges = new ArrayList<DefaultEdge>();
         hostHouse = null;
         isVisitor = false;
 
