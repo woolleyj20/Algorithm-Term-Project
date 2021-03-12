@@ -1,21 +1,65 @@
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import java.util.ArrayList;
 
 public class Algorithm {
 
-
     public static void main(String[] args) {
-        //Temporary hard coded inputs
-        int totalPeople = 0;
-        String[] namesArray = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        //scanner for input checking; arraylist to store names
+        Scanner scan = new Scanner(System.in);
+        ArrayList<String> namesArray = new ArrayList<String>();
+        System.out.println("Welcome to our Small Group Creator!");
 
-        //Temporary hard coded group size
-        int groupSize = 13;
+        //while loop to ensure given filename is accepted; also stores values in namesArray
+        while(true) {
+            System.out.print("Please specify a text file [1 to quit]: ");
+            String filename = scan.nextLine();
+            if(filename.equals("1")){
+                System.exit(0);
+            }
+            try {
+                File myFile = new File(filename);
+                Scanner fileScan = new Scanner(myFile);
+                while (fileScan.hasNextLine()) {
+                    String data = fileScan.nextLine();
+                    if (data.contains(",")) {
+                        data = data.replace(",", " +");
+                    }
+                    namesArray.add(data.trim());
+                }
+                fileScan.close();
+                break;
+            } catch (FileNotFoundException e) {
+                System.out.println("File could not be found or filename does not exist.");
+            }
+        }
+
+        //while loop to ensure entered groupSize is an int and is > 2
+        int groupSize;
+        while(true){
+            System.out.print("What size of small groups would you like? ");
+            if(scan.hasNextInt()){
+                groupSize = scan.nextInt();
+                if(groupSize > 2){
+                    break;
+                }else{
+                    System.out.println("Please enter a number greater than 2.");
+                }
+            }else{
+                scan.next();
+                System.out.println("Please enter a number.");
+            }
+
+        }
+        scan.close();
+
+        int totalPeople = 0;
 
         //Graph constructed from default
         Graph<AdjListMember, DefaultEdge> graph = new SimpleDirectedGraph<>(DefaultEdge.class);
