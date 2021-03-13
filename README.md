@@ -5,10 +5,12 @@ The problem that we are trying to tackle is one in which we have a group of peop
 
 ## Description
 *Describe what your project is about and what language you used*
+
 The goal of our project is to get experience using Java, the external Graph library, and gain experience analyzing the time complexity of our solution. Another purpose of this project is to gain experience finding and using greedy algorithms for complex problems. We used Java to program our algorithm and used JGrapht as our external graph library. *maybe write about our algorithm step by step here*
 
 ## Requirements
 *The requirements of the program, i.e. Python 3.1, what libraries are needed*
+
 Import JGrpaht, Java SE 7 (minimum)
 
 ## User Manual
