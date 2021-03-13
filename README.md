@@ -24,7 +24,7 @@ After cloning the program, go to the command line an
 *Include screenshots of your program running, and the list of weekly groups for each of your three files.*
 
 
-# Output for group1.txt 
+### Output for group1.txt 
 Week 1:
 House 0: Reiner(host) | [﻿Elly, Bertholdt, Annie, Henry, Tim]
 House 1: Chris(host) | [Cody + Anna, Eric + Michelle]
@@ -140,7 +140,7 @@ House 0: Kyle(host) | [Tim, ﻿Elly, Reiner, Bertholdt, Annie]
 House 1: Cody + Anna(host) | [Chris, Eric + Michelle]
 House 2: Henry(host) | [Jennie, Mark, Tyler, Andrew]
 
-# Output for group2.txt
+### Output for group2.txt
 Week 1:
 Group 0: Reiner(host) | [﻿Elly, Bertholdt, Annie, Henry, Barney]
 Group 1: Chris(host) | [Cody + Anna, Eric + Michelle, Kurt]
@@ -442,7 +442,7 @@ Group 2: Henry(host) | [Jennie, Mark, Tyler, Andrew, Kyle]
 Group 3: Tim(host) | [Sam + Andy, Chandler, Joey, Monica]
 Group 4: Rachel(host) | [Phoebe, Ted, Barney, Kurt]
 
-# Output for group3.txt
+### Output for group3.txt
 Week 1:
 Group 0: Reiner(host) | [Elly, Bertholdt, Annie, Henry, Addy]
 Group 1: Chris(host) | [Cody + Anna, Eric + Michelle, Fina]
