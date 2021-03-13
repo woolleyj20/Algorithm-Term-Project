@@ -15,7 +15,7 @@ public class Algorithm {
     public static void main(String[] args) {
         //scanner for input checking; arraylist to store names
         Scanner scan = new Scanner(System.in);
-        ArrayList<String> namesArray = new ArrayList<String>();
+        ArrayList<String> namesArray = new ArrayList<>();
         System.out.println("Welcome to our Small Group Creator!");
 
         //while loop to ensure given filename is accepted; also stores values in namesArray
@@ -101,7 +101,7 @@ public class Algorithm {
             for (int j = 0; j < adjList.size(); j++) {
                 if (i != j) {
                     //Construct the edge
-                    DefaultEdge edge = graph.addEdge(adjList.get(i), adjList.get(j));
+                    graph.addEdge(adjList.get(i), adjList.get(j));
                 }
             }
         }
