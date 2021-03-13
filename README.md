@@ -11,7 +11,7 @@ The goal of our project is to get experience using Java, the external Graph libr
 ## Requirements
 *The requirements of the program, i.e. Python 3.1, what libraries are needed*
 
-Import JGrapht, Java 15.0.2 (most recent)
+Java 15.0.2 (most recent)
 
 ## User Manual
 *Once a person clones this into their computer how the person is supposed to run the program, add screenshots showing how your program works, also add here the link to the Youtube video showing the program running*
