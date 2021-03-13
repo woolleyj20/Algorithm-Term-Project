@@ -1,28 +1,15 @@
 # Creating Community Small Groups
+A work by: Nathan Lee, Jason Woolley and Jason Djajasasmita
 
-_**You should erase this the text below as you fill it up with your own text**_
-
-Here you will describe your term project. Remember to write your names.
-[More detailed instructions here](SmallGroups-Graph.pptx)
-
-You will need to include in this repository:
-- `group1.txt` a file with 16 names
-- `group2.txt` a file with 29 names
-- `group3.txt` a file with 34 names
-- The source code of your program
-
-This document should be organized as follows:
-
-# Creating Community Small Groups
-A work by: McDonald Berger and Igor Tzankoven
-
-*Write an introduction to your work*
+The problem that we are trying to tackle is one in which we have a group of people that attend the same church but do not know each other very well. In order for these members to really get to know each other, they must visit each other's houses for small group. Couples at this church wish to stay in the same small group with their respective partner each week. The end goal of our program is for each of the members of the church to visit the houses of all other members within the minimum number of weeks possible. 
 
 ## Description
 *Describe what your project is about and what language you used*
+The goal of our project is to get experience using Java, the external Graph library, and gain experience analyzing the time complexity of our solution. Another purpose of this project is to gain experience finding and using greedy algorithms for complex problems. We used Java to program our algorithm and used JGrapht as our external graph library. /*maybe write about our algorithm step by step here*/
 
 ## Requirements
 *The requirements of the program, i.e. Python 3.1, what libraries are needed*
+Import JGrpaht, Java SE 7 (minimum)
 
 ## User Manual
 *Once a person clones this into their computer how the person is supposed to run the program, add screenshots showing how your program works, also add here the link to the Youtube video showing the program running*
@@ -30,4 +17,5 @@ A work by: McDonald Berger and Igor Tzankoven
 ## Reflection
 *Write the reflection about getting the small groups in the minimum number of iterations, etc.*
 
-
+## Results
+*Include screenshots of your program running, and the list of weekly groups for each of your three files.*
