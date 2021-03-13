@@ -1,7 +1,7 @@
 # Creating Community Small Groups
 A work by: Nathan Lee, Jason Woolley and Jason Djajasasmita
 
-The problem that we are trying to tackle is one in which we have a group of people that attend the same church but do not know each other very well. In order for these members to really get to know each other, they must visit each other's houses for small group. Couples at this church wish to stay in the same small group with their respective partner each week. The end goal of our program is for each of the members of the church to visit the houses of all other members within the minimum number of weeks possible. 
+The problem that we are trying to tackle is one in which we have a group of people that attend the same church but do not know each other very well. In order for these members to really get to know each other, they wish to visit each other's houses for small group which occurs once a week. Couples at this church wish to stay in the same small group with their respective partner each week. The end goal of our program is for each of the members of the church to visit the houses of all other members within the minimum number of weeks possible. 
 
 ## Description
 *Describe what your project is about and what language you used*
