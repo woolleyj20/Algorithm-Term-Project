@@ -49,38 +49,20 @@ public class Algorithm {
             outputFile = scan.nextLine().trim() + ".txt";
             File writeFile = new File(outputFile);
             if(!writeFile.createNewFile()){
-                writeFile.delete();
-                writeFile = new File(outputFile);
+                if(writeFile.delete()){
+                    new File(outputFile);
+                }
             }
         }catch (IOException e){
             System.err.println(e.getMessage());
         }
-
-        //while loop to ensure entered groupSize is an int and is > 2
-        int groupSize;
-        while(true){
-            System.out.print("What size of small groups would you like? ");
-            if(scan.hasNextInt()){
-                groupSize = scan.nextInt();
-                if(groupSize > 2){
-                    break;
-                }else{
-                    System.out.println("Please enter a number greater than 2.");
-                }
-            }else{
-                scan.nextLine();
-                System.out.println("Please enter a number.");
-            }
-        }
-
-        scan.close();
 
         int totalPeople = 0;
 
         //Graph constructed from default
         Graph<AdjListMember, DefaultEdge> graph = new SimpleDirectedGraph<>(DefaultEdge.class);
 
-        //Set up the list of verticies as AdjListMembers and add them to graph
+        //Set up the list of vertices as AdjListMembers and add them to graph
         ArrayList<AdjListMember> adjList = new ArrayList<>();
         for (String s : namesArray) {
             if (s.contains("+")) {
@@ -96,7 +78,28 @@ public class Algorithm {
             }
         }
 
-        //Loop through all combinations of verticies and make an edge for it
+        //while loop to ensure entered groupSize is an int and is > 2
+        //moved it after initializing array because we need totalPeople
+        int groupSize;
+        while(true){
+            System.out.print("What size of small groups would you like?" +
+                    "\n(Group size should be no more than half of all people): ");
+            if(scan.hasNextInt()){
+                groupSize = scan.nextInt();
+                if(groupSize > 2 && groupSize <= (totalPeople / 2)){
+                    break;
+                }else{
+                    System.out.println("Please enter a number greater than 2 and less than half the group size.");
+                }
+            }else{
+                scan.nextLine();
+                System.out.println("Please enter a number.");
+            }
+        }
+
+        scan.close();
+
+        //Loop through all combinations of vertices and make an edge for it
         for (int i = 0; i < adjList.size(); i++) {
             for (int j = 0; j < adjList.size(); j++) {
                 if (i != j) {
@@ -320,7 +323,7 @@ public class Algorithm {
         StringBuilder retval = new StringBuilder();
         retval.append("Week ").append(weekNumber).append(":\n");
         for (int i = 0; i < houseList.size(); i++) {
-            retval.append("House ").append(i).append(": ").append(houseList.get(i).toString()).append("\n");
+            retval.append("Group ").append(i).append(": ").append(houseList.get(i).toString()).append("\n");
         }
         return retval.toString();
     }
