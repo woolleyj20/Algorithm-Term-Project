@@ -7,12 +7,12 @@ The problem that we are trying to tackle is one in which we have a group of peop
 The goal of our project is to get experience using Java, the external Graph library, and gain experience analyzing the time complexity of our solution. Another purpose of this project is to gain experience finding and using greedy algorithms for complex problems. We used Java to program our algorithm and used JGrapht as our external graph library.
 
 ## Requirements
-The only requirement to run the Jar file on the command line is to have Java 15.0.2 (most recent version) installed on your computer.
+In order to run the Jar file on the command line you must have Java 15.0.2 (most recent version) installed on your computer.
 
 ## User Manual
-1. Clone the repsitory somewhere onto your computer
-2. Open terminal and cd into community-groups-term-proj-jason-nathan folder then cd into the BibleStudyAlgorithm_jar folder (<b>NOT the BibleStudyAlgorithm folder</b>)
-3. Once you are in the BibleStudyAlgorithm_jar folder, run the command: <b>java -jar BibleStudyAlgorithm.jar</b> <img width="656" alt="Screen Shot 2021-03-13 at 2 44 38 PM" src="https://user-images.githubusercontent.com/43599897/111051806-a8b67000-840a-11eb-98c4-e9497dd10a33.png">
+1. Clone the repository somewhere onto your computer.
+2. Open terminal and cd into community-groups-term-proj-jason-nathan folder then cd into the BibleStudyAlgorithm_jar folder (<b>NOT the BibleStudyAlgorithm folder</b>).
+3. Once you are in the BibleStudyAlgorithm_jar folder, run the command: <b>java -jar BibleStudyAlgorithm.jar</b>  <img width="656" alt="Screen Shot 2021-03-13 at 2 44 38 PM" src="https://user-images.githubusercontent.com/43599897/111051806-a8b67000-840a-11eb-98c4-e9497dd10a33.png">
 4. You are now able to run the program.
 5. The program will ask for a text file name. Please choose between the three given text files: group1.txt (16 names), group2.txt (29 names) and group3.txt (34 names).
 6. The output of the program will appear in the console and will be written to a textfile with the name of your choosing.
@@ -25,3 +25,20 @@ The only requirement to run the Jar file on the command line is to have Java 15.
 ## Results
 *Include screenshots of your program running, and the list of weekly groups for each of your three files.*
 
+<b><i>Program running with output for group1.txt</i></b><br>
+<img width="652" alt="Screen Shot 2021-03-13 at 3 05 53 PM" src="https://user-images.githubusercontent.com/43599897/111052173-ae618500-840d-11eb-92ad-9d67ec8caff8.png">
+<img width="465" alt="Screen Shot 2021-03-13 at 3 06 11 PM" src="https://user-images.githubusercontent.com/43599897/111052175-af92b200-840d-11eb-9424-e3ff429385af.png">
+
+<b><i>Screenshot for output of group2.txt</i></b><br>
+<img width="446" alt="Screen Shot 2021-03-13 at 3 01 23 PM" src="https://user-images.githubusercontent.com/43599897/111052103-fb912700-840c-11eb-8168-3ae8308bd853.png">
+<img width="453" alt="Screen Shot 2021-03-13 at 3 02 13 PM" src="https://user-images.githubusercontent.com/43599897/111052120-23808a80-840d-11eb-98eb-ba7bb48de1c2.png">
+<br>
+<img width="456" alt="Screen Shot 2021-03-13 at 3 02 58 PM" src="https://user-images.githubusercontent.com/43599897/111052124-34310080-840d-11eb-9613-15e0a33ae8fc.png">
+<img width="475" alt="Screen Shot 2021-03-13 at 3 04 31 PM" src="https://user-images.githubusercontent.com/43599897/111052149-76f2d880-840d-11eb-92f7-5dc685835ec1.png">
+
+<b><i>Screenshot for output of group3.txt</i><b/><br>
+<img width="451" alt="Screen Shot 2021-03-13 at 3 09 08 PM" src="https://user-images.githubusercontent.com/43599897/111052230-1adc8400-840e-11eb-8b3c-20275dc954c9.png">
+<img width="460" alt="Screen Shot 2021-03-13 at 3 09 22 PM" src="https://user-images.githubusercontent.com/43599897/111052232-1d3ede00-840e-11eb-8c98-5791af99e9ae.png">
+<img width="479" alt="Screen Shot 2021-03-13 at 3 10 01 PM" src="https://user-images.githubusercontent.com/43599897/111052248-419aba80-840e-11eb-9a59-bbc42c434741.png">
+<img width="466" alt="Screen Shot 2021-03-13 at 3 10 19 PM" src="https://user-images.githubusercontent.com/43599897/111052250-45c6d800-840e-11eb-99ab-435e1a063e24.png">
+<img width="467" alt="Screen Shot 2021-03-13 at 3 10 53 PM" src="https://user-images.githubusercontent.com/43599897/111052256-4eb7a980-840e-11eb-88bf-a6f3291cd3ff.png">
