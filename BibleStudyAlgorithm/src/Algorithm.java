@@ -5,6 +5,8 @@ import org.jgrapht.graph.SimpleDirectedGraph;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import java.util.ArrayList;
 
@@ -36,8 +38,22 @@ public class Algorithm {
                 fileScan.close();
                 break;
             } catch (FileNotFoundException e) {
-                System.out.println("File could not be found or filename does not exist.");
+                System.err.println(e.getMessage());
             }
+        }
+
+        //gets the output file name and overwrites the file if it already exists
+        String outputFile = "";
+        try{
+            System.out.print("Please enter a name for your output file: [no extension] ");
+            outputFile = scan.nextLine().trim();
+            File writeFile = new File(outputFile + ".txt");
+            if(!writeFile.createNewFile()){
+                writeFile.delete();
+                writeFile = new File(outputFile + ".txt");
+            }
+        }catch (IOException e){
+            System.err.println(e.getMessage());
         }
 
         //while loop to ensure entered groupSize is an int and is > 2
@@ -57,6 +73,7 @@ public class Algorithm {
             }
 
         }
+
         scan.close();
 
         int totalPeople = 0;
@@ -159,8 +176,18 @@ public class Algorithm {
                 member.isVisitor = false;
             }
             System.out.println(printWeeklyHouses(weeklyHouses, weekCounter));
+
+            try{
+                FileWriter outWriter = new FileWriter(outputFile + ".txt", true);
+                outWriter.write(printWeeklyHouses(weeklyHouses, weekCounter) + "\n");
+                outWriter.close();
+            } catch (IOException e){
+                System.err.println(e.getMessage());
+            }
+
             weekCounter++;
         }
+        System.out.println("Your Small Group assignments have been saved to: " + outputFile + ".txt");
     }
 
     public static boolean assign(AdjListMember member, Graph<AdjListMember, DefaultEdge> graph, ArrayList<House> weeklyHouses, int groupSizeCheck, int maxHouses) {
