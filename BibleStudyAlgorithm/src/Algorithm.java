@@ -45,12 +45,12 @@ public class Algorithm {
         //gets the output file name and overwrites the file if it already exists
         String outputFile = "";
         try{
-            System.out.print("Please enter a name for your output file: [no extension] ");
-            outputFile = scan.nextLine().trim();
-            File writeFile = new File(outputFile + ".txt");
+            System.out.print("Please enter a name for your output file [no extension]: ");
+            outputFile = scan.nextLine().trim() + ".txt";
+            File writeFile = new File(outputFile);
             if(!writeFile.createNewFile()){
                 writeFile.delete();
-                writeFile = new File(outputFile + ".txt");
+                writeFile = new File(outputFile);
             }
         }catch (IOException e){
             System.err.println(e.getMessage());
@@ -68,10 +68,9 @@ public class Algorithm {
                     System.out.println("Please enter a number greater than 2.");
                 }
             }else{
-                scan.next();
+                scan.nextLine();
                 System.out.println("Please enter a number.");
             }
-
         }
 
         scan.close();
@@ -177,8 +176,9 @@ public class Algorithm {
             }
             System.out.println(printWeeklyHouses(weeklyHouses, weekCounter));
 
+            //Writes to file each iteration, appending to the existing file each time
             try{
-                FileWriter outWriter = new FileWriter(outputFile + ".txt", true);
+                FileWriter outWriter = new FileWriter(outputFile, true);
                 outWriter.write(printWeeklyHouses(weeklyHouses, weekCounter) + "\n");
                 outWriter.close();
             } catch (IOException e){
@@ -187,7 +187,7 @@ public class Algorithm {
 
             weekCounter++;
         }
-        System.out.println("Your Small Group assignments have been saved to: " + outputFile + ".txt");
+        System.out.println("Your Small Group assignments have been saved to: " + outputFile);
     }
 
     public static boolean assign(AdjListMember member, Graph<AdjListMember, DefaultEdge> graph, ArrayList<House> weeklyHouses, int groupSizeCheck, int maxHouses) {
