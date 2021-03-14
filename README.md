@@ -20,7 +20,17 @@ In order to run the Jar file on the command line you must have Java 15.0.2 (most
 *add here the link to the Youtube video showing the program running*
 
 ## Reflection
-*Write the reflection about getting the small groups in the minimum number of iterations, etc.*
+Let’s say n is the number of people and m is the size of the small groups. In order for an individual A to visit everyone else’s home there must be at least n - 1 iterations. Then, everyone else must visit A’s home which would take at least (n - 1)/(m - 1) iterations. It takes (n - 1)/(m - 1) iterations because each group has size m but only m - 1 of these people are visitors. In order for A to have all people visit their home, A can have at most m - 1 people over at a time and must cover all n - 1 people. So, for a single person to visit all other peoples homes and for all other people to visit their home, it would take (n - 1) + (n - 1)/(m - 1) iterations. 
+
+This indicates that for a single person to visit everyone and for everyone to visit them in an optimal number of iterations, they must visit n - 1 of the time and host (n - 1)/(m - 1) of the time.
+So for a single person, an optimal host to visitor ratio would be:
+(n - 1)/(m - 1) : (n - 1)	which simplifies to 1 : m - 1
+We know that we have n/m hosts and n - (n/m) visitors in our problem. For our problem we have a host to visitor ratio of:
+n/m : n - (n/m) which simplifies to 1 : m - 1
+Since the ratios are equal, it implies that all people can have an optimal host to visitor ratio and complete their visitations over (n - 1) + (n - 1)/(m - 1) iterations. Couples slightly alter the optimal solution since couples are selected as hots together which alters the host-to-visitor ratio slightly. This may add a couple iterations to the optimal solution.
+
+We know the optimal will run (n - 1) + (n - 1)/(m - 1) iterations but each iteration also has a time complexity. In order for one iteration to assign all people to groups, we must go through the list of people and check the first edges that we can find for each person. Assuming that edges are removed once people have visited each other, this should take no longer than O(n) time per iteration. Thus we have O(n) time running (n - 1) + (n - 1)/(m - 1) iterations so the time complexity should be O(n^2).
+
 
 ## Results
 *Include screenshots of your program running, and the list of weekly groups for each of your three files.*
