@@ -10,6 +10,9 @@ The program takes in a list of people and couples in a text file and outputs a l
 ## Requirements
 In order to run the Jar file on the command line you must have Java 15.0.2 (most recent version) installed on your computer.
 
+*Visit the following link to if you do not already have Java 15.0.2 installed.* <br>
+https://www.oracle.com/java/technologies/javase-jdk15-downloads.html
+
 ## User Manual
 1. Clone the repository somewhere onto your computer.
 2. Open terminal and cd into community-groups-term-proj-jason-nathan folder then cd into the BibleStudyAlgorithm_jar folder (<b>NOT the BibleStudyAlgorithm folder</b>).
