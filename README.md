@@ -17,7 +17,8 @@ In order to run the Jar file on the command line you must have Java 15.0.2 (most
 5. The program will ask for a text file name. Please choose between the three given text files: group1.txt (16 names), group2.txt (29 names) and group3.txt (34 names).
 6. The output of the program will appear in the console and will be written to a textfile with the name of your choosing.
 
-*add here the link to the Youtube video showing the program running*
+*Visit the Youtube link below to see hands on instructions on how to run the program.*<br>
+    https://youtu.be/RqnXU5RwHRw
 
 ## Reflection
 Let’s say n is the number of people and m is the size of the groups. In order for an individual A to visit everyone else’s home there must be at least n - 1 iterations. Then, everyone else must visit A’s home which would take at least (n - 1)/(m - 1) iterations. We get (n - 1)/(m - 1) iterations because each group has size m but only m - 1 are visitors. In order for A to have all people visit their home, A can have at most m - 1 people over at a time and must cover all n - 1 people. So, for a single person to visit all other peoples homes and for all other people to visit their home, it would take (n - 1) + (n - 1)/(m - 1) iterations. 
